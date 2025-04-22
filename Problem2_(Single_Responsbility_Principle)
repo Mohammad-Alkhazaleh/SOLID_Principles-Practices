@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace SolidPrincplesPractice
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            ToDoList Task = new ToDoList(1,"Studing programming_Solid princples",30,false);
+            var SaveTaskObj = new Save();
+            SaveTaskObj.SaveTask(Task);
+            Task = new ToDoList(2, "Studing programming_T-SQL", 60, false);
+            SaveTaskObj.SaveTask(Task);
+            var PrintTaskObj = new Print();
+            PrintTaskObj.PrintAllTasks(Save.toDoList);
+
+        }
+        public class ToDoList
+        {
+            public int TaskID { set; get; }
+            public string TaskDescription { set; get; }
+            public int PeriodInMin { set; get; }
+            public bool IsDone { set; get; }
+
+            public ToDoList(int taskID , string TaskDesc , int periodInMin, bool isDone)
+            {
+                TaskID = taskID;
+                TaskDescription = TaskDesc;
+                PeriodInMin = periodInMin;
+                IsDone = isDone;
+            }
+        }
+        public class Save
+        {
+            public static Queue<ToDoList> toDoList = new Queue<ToDoList>();
+            public void SaveTask(ToDoList task)
+            {
+                toDoList.Enqueue(task);
+            }
+        }
+        public class Print
+        {
+            public void PrintAllTasks(Queue<ToDoList> Tasks)
+            {
+                foreach (var Task in Tasks)
+                {
+                    Console.WriteLine($"========Task[{Task.TaskID}]=========");
+                    Console.WriteLine($"Task description : {Task.TaskDescription}");
+                    Console.WriteLine($"Task period : {Task.PeriodInMin}");
+                    Console.WriteLine($"IsDone: {Task.IsDone}");
+                    Console.WriteLine($"====================================");
+                }
+               
+            }
+        }
+    }
+    
+    
+}
+
