@@ -1,1 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace SolidPrincplesPractice
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            clsNotifycation notify1 = new clsNotifycation(new SMS());
+            clsNotifycation notify2 = new clsNotifycation(new Fax());
+            notify1.Send("Mohammad Alkhazaleh","Hello mohammad  , thank you for register the order...");
+            notify2.Send("Mohammad Alkhazaleh", "Hello mohammad  , thank you for register the order...");
+
+        }
+        public interface INotifycation
+        {
+            void Send(string To ,string Message);
+        }
+        public class clsNotifycation 
+        {
+            private INotifycation _notifycation;
+            public clsNotifycation(INotifycation notifycation)
+            {
+                _notifycation = notifycation;
+            }
+            public void Send(string To , string Message)
+            {
+                _notifycation.Send(To , Message);
+            }
+
+        }
+        public class SMS : INotifycation
+        {
+            public void Send(string To, string Message)
+            {
+                Console.WriteLine("Send message using : SMS");
+                Console.WriteLine($"To : {To} \n Message : {Message}");
+            }
+        }
+        public class Fax : INotifycation
+        {
+            public void Send(string To, string Message)
+            {
+                Console.WriteLine("Send message using : Fax");
+                Console.WriteLine($"To : {To} \n Message : {Message}");
+            }
+        }
+    }
+    
+    
+}
+
 
