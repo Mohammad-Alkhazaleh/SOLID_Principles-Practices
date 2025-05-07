@@ -1,1 +1,75 @@
 
+"اشرح مبدأ Open/Closed Principle من مبادئ SOLID، ثم طبّقه عمليًا في برنامج C# يحسب مساحة أشكال هندسية متعددة (مثل الدائرة والمستطيل)، بحيث يمكن إضافة أشكال جديدة دون تعديل الكود الموجود مسبقًا."
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace SolidPrincplesPractice
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            AreaCalculater calc = new AreaCalculater(new Circle(10));
+            calc.Area_Calculater();
+
+            AreaCalculater calc1 = new AreaCalculater(new Rectangle(10,20));
+            calc1.Area_Calculater();
+
+        }
+
+        public interface IShapes
+        {
+            void AreaCaluclater();
+        }
+        public class AreaCalculater
+        {
+            IShapes _Shape;
+            public AreaCalculater(IShapes shape)
+            {
+                _Shape = shape;
+            }
+            public void Area_Calculater()
+            {
+                _Shape.AreaCaluclater();
+            }
+        }
+        public class Circle : IShapes
+        {
+            public double Radious { get; set; }
+            public Circle(double radious)
+            {
+                Radious = radious;
+            }
+            public void AreaCaluclater()
+            {
+                Console.WriteLine($"Circle area is {Math.PI * Math.Pow(Radious, 2)}");
+            }
+        }
+        public class Rectangle : IShapes
+        {
+            public double Height { get; set; }
+            public double Width { get; set; }
+            public Rectangle(double height, double width)
+            {
+                Height = height;
+                Width = width;
+            }
+            public void AreaCaluclater()
+            {
+                Console.WriteLine($"Rectangle area is {Height * Width}");
+            }
+        }
+
+
+    }
+}
+
+
